@@ -1,14 +1,22 @@
 package com.github.soerxpso.xpspawners.manager;
 
+import org.bukkit.configuration.file.FileConfiguration;
+
+import com.github.soerxpso.xpspawners.XPSpawners;
+
 public class ConfigManager {
 
-	//TODO
-	public static long getHarvestInterval() {
-		return 0;
+	private static FileConfiguration config;
+	
+	public static void loadConfig() {
+		config = XPSpawners.getPlugin().getConfig();
 	}
 	
-	//TODO
+	public static int getHarvestInterval() {
+		return config.getInt("harvest-interval", 200);
+	}
+	
 	public static int getBaseXpPerDay() {
-		return 0;
+		return config.getInt("xp-per-day", 20000);
 	}
 }
