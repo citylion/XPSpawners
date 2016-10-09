@@ -16,7 +16,7 @@ public class ConfigManager {
 		return config.getInt("harvest-interval", 200);
 	}
 	
-	public static int getBaseXpPerDay() {
-		return config.getInt("xp-per-day", 20000);
+	public static int getBaseXpPerHour() {
+		return config.getInt("xp-per-hour", 20000);
 	}
 }

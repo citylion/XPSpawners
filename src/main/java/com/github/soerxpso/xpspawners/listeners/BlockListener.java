@@ -22,6 +22,8 @@ public class BlockListener implements Listener {
 		boolean brokenWithSilk = is.getEnchantments().containsKey(Enchantment.SILK_TOUCH);
 		boolean isXpSpawner = b.getType().equals(Material.MOB_SPAWNER);
 		if(brokenWithSilk && isXpSpawner) {
+			e.setCancelled(true);
+			e.getBlock().setType(Material.AIR);
 			ItemStack itemToDrop = XPSpawners.getPlugin()
 					.getSpawnerManager().convertSpawnerToItem(b);
 			b.getWorld().dropItem(b.getLocation().add(0.5, 0.5, 0.5), itemToDrop);
