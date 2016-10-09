@@ -1,0 +1,3 @@
+name: ${name}
+version: ${version}
+main: com.github.soerxpso.xpspawners.XPSpawners
