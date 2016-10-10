@@ -1,7 +1,5 @@
 package com.github.soerxpso.xpspawners;
 
-import java.util.logging.Level;
-
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.github.soerxpso.xpspawners.listeners.BlockListener;
@@ -28,9 +26,5 @@ public class XPSpawners extends JavaPlugin {
 	
 	public SpawnerManager getSpawnerManager() {
 		return spawnerManager;
-	}
-	
-	public static void log(String message) {
-		plugin.getServer().getLogger().log(Level.INFO, "[XPSpawners] " + message);
 	}
 }
