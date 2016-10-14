@@ -4,7 +4,7 @@
 
   <groupId>com.github.soerxpso</groupId>
   <artifactId>XPSpawners</artifactId>
-  <version>1.0.0</version>
+  <version>1.0.1</version>
   <packaging>jar</packaging>
 
   <name>XPSpawners</name>
@@ -32,8 +32,8 @@
            <artifactId>maven-compiler-plugin</artifactId>
            <version>3.5.1</version>
            <configuration>
-               <source>1.7</source>
-               <target>1.7</target>
+               <source>1.8</source>
+               <target>1.8</target>
            </configuration>
        </plugin>
    </plugins>
@@ -44,14 +44,24 @@
       <id>spigot-repo</id>
       <url>https://hub.spigotmc.org/nexus/content/groups/public/</url>
     </repository>
+    <repository>
+      <id>civcraft-repo</id>
+      <url>http://build.civcraft.co:8080/plugin/repository/everything/</url>
+    </repository>
 </repositories>
 
 <dependencies>
      <dependency>
       <groupId>org.spigotmc</groupId>
       <artifactId>spigot-api</artifactId>
-      <version>1.10-R0.1-SNAPSHOT</version>
+      <version>1.10.2-R0.1-SNAPSHOT</version>
       <scope>provided</scope>
     </dependency>
+    <dependency>
+		<groupId>vg.civcraft.mc.civmodcore</groupId>
+		<artifactId>CivModCore</artifactId>
+		<version>1.4.50</version>
+		<scope>provided</scope>
+	</dependency>
 </dependencies>
 </project>
