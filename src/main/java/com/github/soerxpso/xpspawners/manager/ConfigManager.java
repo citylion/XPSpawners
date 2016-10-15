@@ -9,6 +9,8 @@ public class ConfigManager {
 	private static FileConfiguration config;
 	
 	public static void loadConfig() {
+		XPSpawners.getPlugin().saveDefaultConfig();
+		XPSpawners.getPlugin().reloadConfig();
 		config = XPSpawners.getPlugin().getConfig();
 	}
 	
