@@ -46,4 +46,8 @@ public class SpawnerManager {
 	public void addSpawner(Spawner spawner) {
 		spawners.add(spawner);
 	}
+	
+	public void removeSpawner(Spawner spawner) {
+		spawners.remove(spawner);
+	}
 }

@@ -37,6 +37,7 @@ public class Spawner implements QTBox, Comparable<Spawner> {
 		Player recipient = null;
 		double recipientDist = Double.MAX_VALUE;
 		Collection<Entity> nearbyEntities = block.getWorld().getNearbyEntities(block.getLocation(), 33, 33, 33);
+		XPSpawners.getPlugin().getLogger().log(Level.INFO, "Spawner at " + block.getLocation() + " searching for nearby players. Found " + nearbyEntities);
 		if(nearbyEntities == null) return false;
 		for(Entity e : nearbyEntities) {
 			if(e.getType() == EntityType.PLAYER) {

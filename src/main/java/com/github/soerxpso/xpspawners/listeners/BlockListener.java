@@ -10,10 +10,18 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import com.github.soerxpso.xpspawners.Spawner;
 import com.github.soerxpso.xpspawners.XPSpawners;
 import com.github.soerxpso.xpspawners.manager.ConfigManager;
+import com.github.soerxpso.xpspawners.manager.SpawnerManager;
 
 public class BlockListener implements Listener {
+	
+	SpawnerManager spawnerManager;
+	
+	public BlockListener() {
+		spawnerManager = XPSpawners.getPlugin().getSpawnerManager();
+	}
 
 	@EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
 	public void onBlockBreak(BlockBreakEvent e) {
@@ -23,6 +31,12 @@ public class BlockListener implements Listener {
 		
 		boolean brokenWithSilk = is.getEnchantments().containsKey(Enchantment.SILK_TOUCH);
 		boolean isXpSpawner = b.getType().equals(Material.MOB_SPAWNER);
+		if(isXpSpawner) {
+			Spawner spawner = spawnerManager.getSpawner(b.getLocation());
+			if(spawner == null) {
+				spawnerManager.removeSpawner(spawner);
+			}
+		}
 		if(brokenWithSilk && isXpSpawner) {
 			if(Math.random() < ConfigManager.getSilkDropChance()) {
 				e.setCancelled(true);
