@@ -5,6 +5,8 @@ import java.util.UUID;
 import java.util.logging.Level;
 
 import org.bukkit.Location;
+import org.bukkit.Particle;
+import org.bukkit.Sound;
 import org.bukkit.block.CreatureSpawner;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -61,6 +63,10 @@ public class Spawner implements QTBox, Comparable<Spawner> {
 	private void giveXP(Player p) {
 		int amount = (int) (ConfigManager.getBaseXpPerHour() / 60f / 60f / 20f 
 						* ConfigManager.getHarvestInterval());
+		// pretty
+		block.getWorld().spawnParticle(Particle.VILLAGER_HAPPY, block.getLocation(), 1, 1, 1, 5);
+		p.playSound(block.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
+		
 		p.giveExp(amount);
 		XPSpawners.getPlugin().getLogger().log(Level.INFO, "Gave " + amount + " XP to " + p);
 	}

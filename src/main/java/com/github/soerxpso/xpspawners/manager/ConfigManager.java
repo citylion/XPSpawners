@@ -21,4 +21,8 @@ public class ConfigManager {
 	public static int getBaseXpPerHour() {
 		return config.getInt("xp-per-hour", 400);
 	}
+	
+	public static double getSilkDropChance() {
+		return config.getDouble("silk-drop-chance", 0.8);
+	}
 }

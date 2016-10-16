@@ -11,6 +11,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import com.github.soerxpso.xpspawners.XPSpawners;
+import com.github.soerxpso.xpspawners.manager.ConfigManager;
 
 public class BlockListener implements Listener {
 
@@ -23,16 +24,18 @@ public class BlockListener implements Listener {
 		boolean brokenWithSilk = is.getEnchantments().containsKey(Enchantment.SILK_TOUCH);
 		boolean isXpSpawner = b.getType().equals(Material.MOB_SPAWNER);
 		if(brokenWithSilk && isXpSpawner) {
-			e.setCancelled(true);
-			e.getBlock().setType(Material.AIR);
-			ItemStack itemToDrop = XPSpawners.getPlugin()
-					.getSpawnerManager().convertSpawnerToItem(b);
-			new BukkitRunnable() {
-				@Override
-				public void run() {
-					b.getWorld().dropItem(b.getLocation().add(0.5, 0.5, 0.5), itemToDrop);
-				}
-			}.runTaskLater(XPSpawners.getPlugin(), 1);
+			if(Math.random() < ConfigManager.getSilkDropChance()) {
+				e.setCancelled(true);
+				e.getBlock().setType(Material.AIR);
+				ItemStack itemToDrop = XPSpawners.getPlugin()
+						.getSpawnerManager().convertSpawnerToItem(b);
+				new BukkitRunnable() {
+					@Override
+					public void run() {
+						b.getWorld().dropItem(b.getLocation().add(0.5, 0.5, 0.5), itemToDrop);
+					}
+				}.runTaskLater(XPSpawners.getPlugin(), 1);
+			}
 		}
 	}
 }
