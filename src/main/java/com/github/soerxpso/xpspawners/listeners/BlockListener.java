@@ -8,6 +8,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import com.github.soerxpso.xpspawners.XPSpawners;
 
@@ -26,7 +27,12 @@ public class BlockListener implements Listener {
 			e.getBlock().setType(Material.AIR);
 			ItemStack itemToDrop = XPSpawners.getPlugin()
 					.getSpawnerManager().convertSpawnerToItem(b);
-			b.getWorld().dropItem(b.getLocation().add(0.5, 0.5, 0.5), itemToDrop);
+			new BukkitRunnable() {
+				@Override
+				public void run() {
+					b.getWorld().dropItem(b.getLocation().add(0.5, 0.5, 0.5), itemToDrop);
+				}
+			}.runTaskLater(XPSpawners.getPlugin(), 1);
 		}
 	}
 }

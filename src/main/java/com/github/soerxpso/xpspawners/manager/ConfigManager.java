@@ -9,14 +9,16 @@ public class ConfigManager {
 	private static FileConfiguration config;
 	
 	public static void loadConfig() {
+		XPSpawners.getPlugin().saveDefaultConfig();
+		XPSpawners.getPlugin().reloadConfig();
 		config = XPSpawners.getPlugin().getConfig();
 	}
 	
 	public static int getHarvestInterval() {
-		return config.getInt("harvest-interval", 200);
+		return config.getInt("harvest-interval", 1200);
 	}
 	
 	public static int getBaseXpPerHour() {
-		return config.getInt("xp-per-hour", 20000);
+		return config.getInt("xp-per-hour", 400);
 	}
 }
