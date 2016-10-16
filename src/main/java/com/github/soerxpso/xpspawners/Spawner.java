@@ -65,9 +65,13 @@ public class Spawner implements QTBox, Comparable<Spawner> {
 						* ConfigManager.getHarvestInterval());
 		// pretty
 		block.getWorld().spawnParticle(Particle.VILLAGER_HAPPY, block.getLocation(), 1, 1, 1, 5);
-		p.playSound(block.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
 		
+		int oldLevel = p.getLevel();
 		p.giveExp(amount);
+		// gotta do this so the sounds don't sync up awkwardly
+		if(!(oldLevel < p.getLevel() && p.getLevel() % 5 == 0)) {
+			p.playSound(block.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1, 1);
+		}
 		XPSpawners.getPlugin().getLogger().log(Level.INFO, "Gave " + amount + " XP to " + p);
 	}
 	
