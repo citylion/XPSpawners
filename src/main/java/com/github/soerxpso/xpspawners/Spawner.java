@@ -33,22 +33,26 @@ public class Spawner implements QTBox, Comparable<Spawner> {
 	
 	public boolean trigger() {
 		Player recipient = null;
+		double recipientDist = Double.MAX_VALUE;
 		Collection<Entity> nearbyEntities = block.getWorld().getNearbyEntities(block.getLocation(), 33, 33, 33);
 		if(nearbyEntities == null) return false;
 		for(Entity e : nearbyEntities) {
 			if(e.getType() == EntityType.PLAYER) {
-				//if nearest player is out of range, return false
-				if(e.getLocation().distance(block.getLocation()) > 16) {
-					return false;
+				//if player has closer spawner, he activates that one instead
+				if(spawnerManager.nearestSpawner(e.getLocation()) != this) {
+					continue;
 				}
-				//if nearest player has does not have another spawner closer to him, he activates this one
-				if(spawnerManager.nearestSpawner(e.getLocation()) == this) {
+				double eDist = e.getLocation().distance(block.getLocation());
+				if(eDist < recipientDist) {
 					recipient = (Player)e;
-					break;
+					recipientDist = eDist;
 				}
 			}
 		}
-		if(recipient == null) return false;
+		//if nearest player is out of range, return false
+		if(recipientDist > 16) {
+			return false;
+		}
 		
 		giveXP(recipient);
 		return true;
