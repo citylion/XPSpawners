@@ -1,6 +1,7 @@
 package com.github.soerxpso.xpspawners.manager;
 
 import java.util.Set;
+import java.util.logging.Level;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -8,6 +9,7 @@ import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 
 import com.github.soerxpso.xpspawners.Spawner;
+import com.github.soerxpso.xpspawners.XPSpawners;
 
 import vg.civcraft.mc.civmodcore.locations.QTBox;
 import vg.civcraft.mc.civmodcore.locations.SparseQuadTree;
@@ -44,6 +46,11 @@ public class SpawnerManager {
 	}
 	
 	public void addSpawner(Spawner spawner) {
+		XPSpawners.getPlugin().getLogger().log(Level.INFO, "Loaded spawner at " + spawner.getLocation());
 		spawners.add(spawner);
+	}
+	
+	public void removeSpawner(Spawner spawner) {
+		spawners.remove(spawner);
 	}
 }

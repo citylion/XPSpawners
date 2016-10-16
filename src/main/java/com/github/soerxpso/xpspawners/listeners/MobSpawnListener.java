@@ -1,5 +1,6 @@
 package com.github.soerxpso.xpspawners.listeners;
 
+import org.bukkit.block.CreatureSpawner;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -10,22 +11,21 @@ import com.github.soerxpso.xpspawners.XPSpawners;
 import com.github.soerxpso.xpspawners.manager.SpawnerManager;
 
 public class MobSpawnListener implements Listener {
-	
+
 	private SpawnerManager spawnerManager;
 	
 	public MobSpawnListener() {
-		spawnerManager = XPSpawners.getPlugin().getSpawnerManager();
+		this.spawnerManager = XPSpawners.getPlugin().getSpawnerManager();
 	}
-
+	
 	@EventHandler(priority = EventPriority.LOW, ignoreCancelled = false)
 	public void onMobSpawn(SpawnerSpawnEvent e) {
 		e.setCancelled(true);
-		e.getSpawner().setDelay(Integer.MAX_VALUE);
 		
-		Spawner spawner = spawnerManager.getSpawner(e.getSpawner().getLocation());
+		CreatureSpawner b = e.getSpawner();
+		Spawner spawner = spawnerManager.getSpawner(b.getLocation());
 		if(spawner == null) {
-			spawner = new Spawner(e.getSpawner());
-			spawnerManager.addSpawner(spawner);
+			spawnerManager.addSpawner(new Spawner(b));
 		}
 	}
 }

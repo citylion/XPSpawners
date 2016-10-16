@@ -5,64 +5,54 @@ import java.util.UUID;
 import java.util.logging.Level;
 
 import org.bukkit.Location;
+import org.bukkit.Particle;
+import org.bukkit.Sound;
 import org.bukkit.block.CreatureSpawner;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import com.github.soerxpso.xpspawners.manager.ConfigManager;
-import com.github.soerxpso.xpspawners.manager.SpawnerManager;
 
 import vg.civcraft.mc.civmodcore.locations.QTBox;
 
 public class Spawner implements QTBox, Comparable<Spawner> {
 	private CreatureSpawner block;
-	private SpawnerManager spawnerManager;
+	private int xpAmountPerHarvest;
 	
 	public Spawner(CreatureSpawner block) {
 		this.block = block;
-		spawnerManager = XPSpawners.getPlugin().getSpawnerManager();
-		
-		new BukkitRunnable() {
-			public void run() {
-				trigger();
-			}
-		}.runTaskTimer(XPSpawners.getPlugin(), 0, ConfigManager.getHarvestInterval());
+		xpAmountPerHarvest = (int) (ConfigManager.getBaseXpPerHour() / 60f / 60f / 20f 
+				* ConfigManager.getHarvestInterval());
 	}
 	
-	public boolean trigger() {
-		Player recipient = null;
-		double recipientDist = Double.MAX_VALUE;
-		Collection<Entity> nearbyEntities = block.getWorld().getNearbyEntities(block.getLocation(), 33, 33, 33);
-		if(nearbyEntities == null) return false;
+	public Player findNearestPlayer() {
+		Collection<Entity> nearbyEntities = 
+				block.getWorld().getNearbyEntities(block.getLocation(), 33, 33, 33);
+		Player nearest = null;
+		double nearestDistance = Double.MAX_VALUE;
 		for(Entity e : nearbyEntities) {
 			if(e.getType() == EntityType.PLAYER) {
-				//if player has closer spawner, he activates that one instead
-				if(spawnerManager.nearestSpawner(e.getLocation()) != this) {
-					continue;
-				}
 				double eDist = e.getLocation().distance(block.getLocation());
-				if(eDist < recipientDist) {
-					recipient = (Player)e;
-					recipientDist = eDist;
+				if(eDist < nearestDistance) {
+					nearest = (Player)e;
+					nearestDistance = eDist;
 				}
 			}
 		}
-		//if nearest player is out of range, return false
-		if(recipientDist > 16) {
-			return false;
-		}
-		
-		giveXP(recipient);
-		return true;
+		return nearest;
 	}
 	
-	private void giveXP(Player p) {
-		int amount = (int) (ConfigManager.getBaseXpPerHour() / 60f / 60f / 20f 
-						* ConfigManager.getHarvestInterval());
-		p.giveExp(amount);
-		XPSpawners.getPlugin().getLogger().log(Level.INFO, "Gave " + amount + " XP to " + p);
+	public void giveXP(Player p) {
+		block.getWorld().spawnParticle(Particle.VILLAGER_HAPPY, block.getLocation(), 1, 1, 1, 15);
+		int oldLevel = p.getLevel();
+		int xpToGive = xpAmountPerHarvest + (int)(Math.random() * 20 - 10);
+		p.giveExp(xpToGive);
+		// gotta do this check so the sounds don't sync up awkwardly
+		if(!(oldLevel < p.getLevel() && p.getLevel() % 5 == 0)) {
+			p.playSound(block.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 0.5f, 1);
+		}
+		XPSpawners.getPlugin().getLogger().log(Level.INFO, "Gave " + xpToGive + " XP to " + p);
 	}
 	
 	public Location getLocation() {

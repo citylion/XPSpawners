@@ -4,7 +4,7 @@
 
   <groupId>com.github.soerxpso</groupId>
   <artifactId>XPSpawners</artifactId>
-  <version>1.0.3</version>
+  <version>1.0.5</version>
   <packaging>jar</packaging>
 
   <name>XPSpawners</name>
