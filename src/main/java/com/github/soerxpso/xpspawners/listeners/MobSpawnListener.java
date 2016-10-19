@@ -18,7 +18,7 @@ public class MobSpawnListener implements Listener {
 		this.spawnerManager = XPSpawners.getPlugin().getSpawnerManager();
 	}
 	
-	@EventHandler(priority = EventPriority.LOW, ignoreCancelled = false)
+	@EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
 	public void onMobSpawn(SpawnerSpawnEvent e) {
 		e.setCancelled(true);
 		
