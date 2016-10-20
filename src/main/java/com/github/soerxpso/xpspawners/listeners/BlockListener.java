@@ -2,12 +2,14 @@ package com.github.soerxpso.xpspawners.listeners;
 
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.CreatureSpawner;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockExplodeEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -22,6 +24,17 @@ public class BlockListener implements Listener {
 	
 	public BlockListener() {
 		spawnerManager = XPSpawners.getPlugin().getSpawnerManager();
+	}
+	
+	@EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
+	public void onBlockInteract(PlayerInteractEvent e) {
+		Block b = e.getClickedBlock();
+		if(b.getType() == Material.MOB_SPAWNER) {
+			Spawner spawner = spawnerManager.getSpawner(b.getLocation());
+			if(spawner == null) {
+				spawnerManager.addSpawner(new Spawner((CreatureSpawner)b));
+			}
+		}
 	}
 
 	@EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
@@ -47,7 +60,9 @@ public class BlockListener implements Listener {
 	
 	@EventHandler
 	public void onBlockExplode(BlockExplodeEvent e) {
-		
+		if(e.getBlock().getType() == Material.MOB_SPAWNER) {
+			removeSpawner(e.getBlock());
+		}
 	}
 	
 	private void removeSpawner(Block b) {
