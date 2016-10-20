@@ -29,7 +29,7 @@ public class BlockListener implements Listener {
 	@EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
 	public void onBlockInteract(PlayerInteractEvent e) {
 		Block b = e.getClickedBlock();
-		if(b.getType() == Material.MOB_SPAWNER) {
+		if(b != null && Material.MOB_SPAWNER.equals(b.getType())) {
 			Spawner spawner = spawnerManager.getSpawner(b.getLocation());
 			if(spawner == null) {
 				spawnerManager.addSpawner(new Spawner((CreatureSpawner)b));
@@ -40,11 +40,12 @@ public class BlockListener implements Listener {
 	@EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
 	public void onBlockBreak(BlockBreakEvent e) {
 		Block b = e.getBlock();
+		if (b == null || e.getPlayer() == null) return;
 		//the item the block was broken with
 		ItemStack is = e.getPlayer().getInventory().getItemInMainHand();
 		
-		boolean brokenWithSilk = is.getEnchantments().containsKey(Enchantment.SILK_TOUCH);
-		boolean isXpSpawner = b.getType().equals(Material.MOB_SPAWNER);
+		boolean brokenWithSilk = (is != null && is.getEnchantments() != null ? is.getEnchantments().containsKey(Enchantment.SILK_TOUCH) : false);
+		boolean isXpSpawner = Material.MOB_SPAWNER.equals(b.getType());
 		
 		if(isXpSpawner) {
 			removeSpawner(b);
@@ -60,7 +61,7 @@ public class BlockListener implements Listener {
 	
 	@EventHandler
 	public void onBlockExplode(BlockExplodeEvent e) {
-		if(e.getBlock().getType() == Material.MOB_SPAWNER) {
+		if(e.getBlock() != null && Material.MOB_SPAWNER.equals(e.getBlock().getType())) {
 			removeSpawner(e.getBlock());
 		}
 	}
