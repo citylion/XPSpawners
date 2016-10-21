@@ -1,7 +1,10 @@
 package com.github.soerxpso.xpspawners.listeners;
 
+import java.util.logging.Level;
+
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockState;
 import org.bukkit.block.CreatureSpawner;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.EventHandler;
@@ -32,7 +35,13 @@ public class BlockListener implements Listener {
 		if(b != null && Material.MOB_SPAWNER.equals(b.getType())) {
 			Spawner spawner = spawnerManager.getSpawner(b.getLocation());
 			if(spawner == null) {
-				spawnerManager.addSpawner(new Spawner((CreatureSpawner)b));
+				BlockState bs = b.getState();
+				if (bs instanceof CreatureSpawner) {
+					spawnerManager.addSpawner(new Spawner((CreatureSpawner)bs));
+				} else {
+					XPSpawners.getPlugin().getLogger().log(Level.INFO, "Attempted to activate spawner but it is not a Creature Spawner {0}", 
+							b.getLocation());
+				}
 			}
 		}
 	}
