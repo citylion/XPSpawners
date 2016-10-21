@@ -46,7 +46,8 @@ public class Spawner implements QTBox, Comparable<Spawner> {
 	public void giveXP(Player p) {
 		block.getWorld().spawnParticle(Particle.VILLAGER_HAPPY, block.getLocation(), 1, 1, 1, 15);
 		int oldLevel = p.getLevel();
-		int xpToGive = xpAmountPerHarvest + (int)(Math.random() * 20 - 10);
+		// Give between 1 and 2x Amount per harvest randomly, so over time it evens out perfectly but has variety.
+		int xpToGive = 1 + (int) Math.floor(Math.random() * 2.0 * (double) xpAmountPerHarvest);
 		p.giveExp(xpToGive);
 		// gotta do this check so the sounds don't sync up awkwardly
 		if(!(oldLevel < p.getLevel() && p.getLevel() % 5 == 0)) {
