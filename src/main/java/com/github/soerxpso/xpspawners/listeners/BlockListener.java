@@ -49,9 +49,10 @@ public class BlockListener implements Listener {
 	@EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
 	public void onBlockBreak(BlockBreakEvent e) {
 		Block b = e.getBlock();
-		if (b == null || e.getPlayer() == null) return;
+		if (b == null) return;
+
 		//the item the block was broken with
-		ItemStack is = e.getPlayer().getInventory().getItemInMainHand();
+		ItemStack is = e.getPlayer() != null ? e.getPlayer().getInventory().getItemInMainHand(): null;
 		
 		boolean brokenWithSilk = (is != null && is.getEnchantments() != null ? is.getEnchantments().containsKey(Enchantment.SILK_TOUCH) : false);
 		boolean isXpSpawner = Material.MOB_SPAWNER.equals(b.getType());
@@ -79,7 +80,7 @@ public class BlockListener implements Listener {
 	
 	private void removeSpawner(Block b) {
 		Spawner spawner = spawnerManager.getSpawner(b.getLocation());
-		if(spawner == null) {
+		if(spawner != null) {
 			spawnerManager.removeSpawner(spawner);
 		}
 	}
