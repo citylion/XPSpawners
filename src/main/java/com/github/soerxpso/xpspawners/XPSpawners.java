@@ -7,6 +7,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import com.github.soerxpso.xpspawners.listeners.BlockListener;
+import com.github.soerxpso.xpspawners.listeners.ChunkListener;
 import com.github.soerxpso.xpspawners.listeners.MobSpawnListener;
 import com.github.soerxpso.xpspawners.manager.ConfigManager;
 import com.github.soerxpso.xpspawners.manager.SpawnerManager;
@@ -22,7 +23,8 @@ public class XPSpawners extends JavaPlugin {
 		ConfigManager.loadConfig();
 		getServer().getPluginManager().registerEvents(new BlockListener(), this);
 		getServer().getPluginManager().registerEvents(new MobSpawnListener(), this);
-		
+		getServer().getPluginManager().registerEvents(new ChunkListener(), this);
+
 		new BukkitRunnable() {
 			public void run() {
 				givePlayersXP();

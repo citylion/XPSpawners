@@ -7,6 +7,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.block.CreatureSpawner;
 
 import com.github.soerxpso.xpspawners.Spawner;
 import com.github.soerxpso.xpspawners.XPSpawners;
@@ -50,6 +51,12 @@ public class SpawnerManager {
 		spawners.add(spawner);
 	}
 	
+	public void safeAddSpawner(CreatureSpawner spawner) {
+		if (getSpawner(spawner.getLocation()) == null) {
+			addSpawner(new Spawner(spawner));
+		}
+	}
+
 	public void removeSpawner(Spawner spawner) {
 		spawners.remove(spawner);
 	}

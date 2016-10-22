@@ -68,10 +68,12 @@ public class BlockListener implements Listener {
 		}
 	}
 	
-	@EventHandler
+	@EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
 	public void onBlockExplode(BlockExplodeEvent e) {
-		if(e.getBlock() != null && Material.MOB_SPAWNER.equals(e.getBlock().getType())) {
-			removeSpawner(e.getBlock());
+		for (Block b : e.blockList()) {
+			if(b != null && Material.MOB_SPAWNER.equals(b.getType())) {
+				removeSpawner(b);
+			}
 		}
 	}
 	
