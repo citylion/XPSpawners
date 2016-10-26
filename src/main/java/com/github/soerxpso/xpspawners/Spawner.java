@@ -17,23 +17,27 @@ import com.github.soerxpso.xpspawners.manager.ConfigManager;
 import vg.civcraft.mc.civmodcore.locations.QTBox;
 
 public class Spawner implements QTBox, Comparable<Spawner> {
-	private CreatureSpawner block;
+	private String creatureTypeName;
+	private EntityType creatureType;
+	private Location location;
 	private int xpAmountPerHarvest;
 	
 	public Spawner(CreatureSpawner block) {
-		this.block = block;
+		this.location = block.getLocation().clone();
+		this.creatureTypeName = block.getCreatureTypeName();
+		this.creatureType = block.getSpawnedType();
 		xpAmountPerHarvest = (int) (ConfigManager.getBaseXpPerHour() / 60f / 60f / 20f 
 				* ConfigManager.getHarvestInterval());
 	}
 	
 	public Player findNearestPlayer() {
 		Collection<Entity> nearbyEntities = 
-				block.getWorld().getNearbyEntities(block.getLocation(), 33, 33, 33);
+				location.getWorld().getNearbyEntities(this.location, 33, 33, 33);
 		Player nearest = null;
 		double nearestDistance = Double.MAX_VALUE;
 		for(Entity e : nearbyEntities) {
 			if(e.getType() == EntityType.PLAYER) {
-				double eDist = e.getLocation().distance(block.getLocation());
+				double eDist = e.getLocation().distance(location);
 				if(eDist < nearestDistance) {
 					nearest = (Player)e;
 					nearestDistance = eDist;
@@ -44,20 +48,20 @@ public class Spawner implements QTBox, Comparable<Spawner> {
 	}
 	
 	public void giveXP(Player p) {
-		block.getWorld().spawnParticle(Particle.VILLAGER_HAPPY, block.getLocation(), 1, 1, 1, 15);
+		location.getWorld().spawnParticle(Particle.VILLAGER_HAPPY, location, 1, 1, 1, 15);
 		int oldLevel = p.getLevel();
 		// Give between 1 and 2x Amount per harvest randomly, so over time it evens out perfectly but has variety.
 		int xpToGive = 1 + (int) Math.floor(Math.random() * 2.0 * (double) xpAmountPerHarvest);
 		p.giveExp(xpToGive);
 		// gotta do this check so the sounds don't sync up awkwardly
 		if(!(oldLevel < p.getLevel() && p.getLevel() % 5 == 0)) {
-			p.playSound(block.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 0.5f, 1);
+			p.playSound(location, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 0.5f, 1);
 		}
 		XPSpawners.getPlugin().getLogger().log(Level.INFO, "Gave " + xpToGive + " XP to " + p);
 	}
 	
 	public Location getLocation() {
-		return block.getLocation();
+		return location;
 	}
 	
 	@Override

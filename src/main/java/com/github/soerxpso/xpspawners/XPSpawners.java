@@ -36,9 +36,9 @@ public class XPSpawners extends JavaPlugin {
 		for(Player p : getServer().getOnlinePlayers()) {
 			Spawner s = spawnerManager.nearestSpawner(p.getLocation());
 			if(s == null) continue;
-			getLogger().log(Level.INFO, "Nearest spawner to " + p + " is at " + s.getLocation());
+			getLogger().log(Level.FINE, "Nearest spawner to " + p + " is at " + s.getLocation());
 			Player nearestToSpawner = s.findNearestPlayer();
-			getLogger().log(Level.INFO, "Nearest player to the spawner at " + s.getLocation() + " is " + nearestToSpawner);
+			getLogger().log(Level.FINE, "Nearest player to the spawner at " + s.getLocation() + " is " + nearestToSpawner);
 			if(nearestToSpawner == p) {
 				if(p.getLocation().distance(s.getLocation()) < 16) {
 					s.giveXP(p);

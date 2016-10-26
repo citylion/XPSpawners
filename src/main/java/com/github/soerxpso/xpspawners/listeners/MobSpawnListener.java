@@ -18,11 +18,12 @@ public class MobSpawnListener implements Listener {
 		this.spawnerManager = XPSpawners.getPlugin().getSpawnerManager();
 	}
 	
-	@EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
+	@EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
 	public void onMobSpawn(SpawnerSpawnEvent e) {
 		e.setCancelled(true);
 		
 		CreatureSpawner b = e.getSpawner();
+		b.setDelay(Integer.MAX_VALUE);
 		Spawner spawner = spawnerManager.getSpawner(b.getLocation());
 		if(spawner == null) {
 			spawnerManager.addSpawner(new Spawner(b));
