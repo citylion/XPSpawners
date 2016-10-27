@@ -1,6 +1,9 @@
 package com.github.soerxpso.xpspawners.listeners;
 
 import java.util.logging.Level;
+import java.util.HashSet;
+import java.util.HashMap;
+import java.util.UUID;
 
 import org.bukkit.Chunk;
 import org.bukkit.Material;
@@ -25,17 +28,31 @@ import com.github.soerxpso.xpspawners.manager.SpawnerManager;
  * @author ProgrammerDan
  */
 public class ChunkListener implements Listener {
+	HashMap<UUID, HashSet<Long>> loaded;
 
 	SpawnerManager spawnerManager;
 	
 	public ChunkListener() {
 		spawnerManager = XPSpawners.getPlugin().getSpawnerManager();
+		loaded = new HashMap<UUID, HashSet<Long>>();
 	}
 
 	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
 	public void chunkLoad(ChunkLoadEvent event) {
 		Chunk chunk = event.getChunk();
 		if (chunk == null) return;
+
+		UUID world = chunk.getWorld().getUID();
+		long chunkId = ((long) chunk.getX() << 32L) + (long) chunk.getZ();
+
+		HashSet<Long> load = loaded.get(world);
+		if (load == null) {
+			load = new HashSet<Long>();
+			loaded.put(world, load);
+		} else if (load.contains(chunkId)) {
+			return;
+		}
+		load.add(chunkId);
 
 		BlockState[] allTile = chunk.getTileEntities();
 		if (allTile == null || allTile.length == 0) return;
@@ -46,6 +63,5 @@ public class ChunkListener implements Listener {
 			}
 		}
 	}
-
 }
 
