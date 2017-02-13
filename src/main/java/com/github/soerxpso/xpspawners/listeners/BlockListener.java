@@ -32,7 +32,7 @@ public class BlockListener implements Listener {
 		spawnerManager = XPSpawners.getPlugin().getSpawnerManager();
 	}
 	
-	@EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
+	@EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
 	public void onBlockPlace(BlockPlaceEvent e) {
 		activateSpawner(e.getPlayer(), e.getBlock());
 	}
