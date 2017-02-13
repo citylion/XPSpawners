@@ -1,25 +1,18 @@
 package com.github.soerxpso.xpspawners.listeners;
 
-import java.util.logging.Level;
-import java.util.HashSet;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.UUID;
 
 import org.bukkit.Chunk;
-import org.bukkit.Material;
-import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.CreatureSpawner;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.world.ChunkLoadEvent;
-import org.bukkit.inventory.ItemStack;
 
-import com.github.soerxpso.xpspawners.Spawner;
 import com.github.soerxpso.xpspawners.XPSpawners;
-import com.github.soerxpso.xpspawners.manager.ConfigManager;
 import com.github.soerxpso.xpspawners.manager.SpawnerManager;
 
 /**

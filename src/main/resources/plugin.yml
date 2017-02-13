@@ -1,5 +1,5 @@
 name: ${name}
 version: ${version}
 main: com.github.soerxpso.xpspawners.XPSpawners
-
 depend: [CivModCore]
+softdepend: [Citadel, Bastion]
