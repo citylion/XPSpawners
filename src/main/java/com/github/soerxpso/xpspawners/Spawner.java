@@ -21,7 +21,8 @@ public class Spawner implements QTBox, Comparable<Spawner> {
 	private int xpAmountPerHarvest;
 	
 	public Spawner(CreatureSpawner block) {
-		this.location = block.getLocation().clone();
+		Location blockLoc = block.getLocation();
+		this.location = new Location(blockLoc.getWorld(), blockLoc.getX() + 0.5, blockLoc.getY() + 0.5, blockLoc.getZ() + 0.5);
 		this.xpAmountPerHarvest = (int) (ConfigManager.getBaseXpPerHour() / 60f / 60f / 20f 
 				* ConfigManager.getHarvestInterval());
 	}

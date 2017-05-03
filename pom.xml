@@ -4,7 +4,7 @@
 
   <groupId>com.github.soerxpso</groupId>
   <artifactId>XPSpawners</artifactId>
-  <version>1.0.14</version>
+  <version>1.0.15</version>
   <packaging>jar</packaging>
 
   <name>XPSpawners</name>
@@ -45,8 +45,8 @@
       <url>https://hub.spigotmc.org/nexus/content/groups/public/</url>
     </repository>
     <repository>
-      <id>civcraft-repo</id>
-      <url>http://build.civcraft.co:8080/plugin/repository/everything/</url>
+      <id>devoted-repo</id>
+      <url>http://build.devotedmc.com/plugin/repository/everything/</url>
     </repository>
 </repositories>
 
