@@ -34,6 +34,9 @@ public class XPSpawners extends JavaPlugin {
 	
 	public void givePlayersXP() {
 		for(Player p : getServer().getOnlinePlayers()) {
+			if (p.isDead()) {
+				continue;
+			}
 			Spawner s = spawnerManager.nearestSpawner(p.getLocation());
 			if(s == null) continue;
 			getLogger().log(Level.FINE, "Nearest spawner to " + p + " is at " + s.getLocation());
