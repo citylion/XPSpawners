@@ -42,7 +42,13 @@ public class SpawnerManager {
 	public Spawner getSpawner(Location loc) {
 		Spawner s = nearestSpawner(loc);
 		if(s == null) return null;
-		if(s.getLocation().equals(loc)) return s;
+		//the spawners internal location is not actually the block location, but the block location increased by 0.5 on every
+		//coordinate, so the location used for range checks is at the actual center of the block, which we need to take into
+		//account here with a check that might seem overly complicated
+		Location spaLoc = s.getLocation();
+		if(spaLoc.getBlock().getLocation().equals(loc.getBlock().getLocation())) {
+			return s;
+		}
 		return null;
 	}
 	
