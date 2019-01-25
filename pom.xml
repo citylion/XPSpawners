@@ -4,7 +4,7 @@
 
   <groupId>com.github.soerxpso</groupId>
   <artifactId>XPSpawners</artifactId>
-  <version>1.1.0</version>
+  <version>1.1.1</version>
   <packaging>jar</packaging>
 
   <name>XPSpawners</name>
@@ -60,7 +60,7 @@
    <dependency>
       <groupId>vg.civcraft.mc.civmodcore</groupId>
       <artifactId>CivModCore</artifactId>
-      <version>1.6.0</version>
+      <version>1.6.1</version>
       <scope>provided</scope>
    </dependency>
 </dependencies>
