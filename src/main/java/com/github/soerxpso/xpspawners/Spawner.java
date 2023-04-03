@@ -14,7 +14,7 @@ import org.bukkit.entity.Player;
 
 import com.github.soerxpso.xpspawners.manager.ConfigManager;
 
-import vg.civcraft.mc.civmodcore.locations.QTBox;
+import vg.civcraft.mc.civmodcore.world.locations.QTBox;
 
 public class Spawner implements QTBox, Comparable<Spawner> {
 	private Location location;

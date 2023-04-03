@@ -12,8 +12,8 @@ import org.bukkit.block.CreatureSpawner;
 import com.github.soerxpso.xpspawners.Spawner;
 import com.github.soerxpso.xpspawners.XPSpawners;
 
-import vg.civcraft.mc.civmodcore.locations.QTBox;
-import vg.civcraft.mc.civmodcore.locations.SparseQuadTree;
+import vg.civcraft.mc.civmodcore.world.locations.QTBox;
+import vg.civcraft.mc.civmodcore.world.locations.SparseQuadTree;
 
 public class SpawnerManager {
 	
