@@ -11,6 +11,7 @@ import com.github.soerxpso.xpspawners.listeners.ChunkListener;
 import com.github.soerxpso.xpspawners.listeners.MobSpawnListener;
 import com.github.soerxpso.xpspawners.manager.ConfigManager;
 import com.github.soerxpso.xpspawners.manager.SpawnerManager;
+import org.bukkit.scheduler.BukkitScheduler;
 
 public class XPSpawners extends JavaPlugin {
 
@@ -25,11 +26,8 @@ public class XPSpawners extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new MobSpawnListener(), this);
 		getServer().getPluginManager().registerEvents(new ChunkListener(), this);
 
-		new BukkitRunnable() {
-			public void run() {
-				givePlayersXP();
-			}
-		}.runTaskTimerAsynchronously(this, 100, ConfigManager.getHarvestInterval());
+		BukkitScheduler scheduler = getServer().getScheduler();
+		scheduler.scheduleSyncRepeatingTask(this, this::givePlayersXP, 0l, ConfigManager.getHarvestInterval());
 	}
 	
 	public void givePlayersXP() {
